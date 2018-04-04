@@ -1,21 +1,20 @@
-//Liste de basket
+//Liste des items entrés
 var basket3 = [];
-//Liste des comptes
+
 var compteItems = [];
 
 //Fonction ajout d'un item dans la liste
 function exo03_addToBasket(){
-    //Get la value de l'input exo03_item
+    
     var itemAjout3 = document.getElementById("exo03_item").value;
-    //Call ma fonction isAlreadyIn
+    
     var testItem = isAlreadyIn(basket3,itemAjout3);
 
     if( testItem === false){
-        //ajoute les items a la iste
+        
         basket3.push(itemAjout3);
-        //ajoute la qtt
         compteItems.push(1);
-        //Call ma fonction majVue3
+        
         majVue3();
         
     }else{
@@ -23,20 +22,37 @@ function exo03_addToBasket(){
         for(var i = 0 ; i < basket3.length ; i++){
             if(itemAjout3 === basket3[i]){
                 compteItems[i]  = compteItems[i] + 1;
+                showJustTheLine(i);
             }
         }
     }
-    
-    
-    
 }
+
+function add(index){
+    
+    compteItems[index] += 1;
+    
+     showJustTheLine(index);
+}
+
+function remove(index){
+    
+    compteItems[index] -= 1;
+    
+    if(compteItems[index] === 0){
+        basket3.splice(index,1);
+        compteItems.splice(index,1);
+        majVue3();
+    }else{
+       showJustTheLine(index);
+    }
+}
+
 
 function majVue3(){
     
-    //selection l'id exo03_basket
+    //Vider la div exo03_basket
     var nodeBasket = document.getElementById("exo03_basket");
-    //echo dans la console 
-    console.log(compteItems);
     
     while (nodeBasket.firstChild) {
         nodeBasket.removeChild(nodeBasket.firstChild);
@@ -46,8 +62,13 @@ function majVue3(){
         
         var newIl = document.createElement('li');
 
-        newIl.innerHTML = basket3[i];
+        newIl.innerHTML =  "<a href='#' class=\"btn btn-sm btn-danger\" onclick='remove(" + i + ")'> - </a> <a href='#' class=\"btn btn-sm btn-success\" onclick='add(" + i + ")'> + </a> " + basket3[i] + " en stock :" + compteItems[i];
 
        document.getElementById("exo03_basket").appendChild(newIl);      
-    }        
+    }      
+}
+
+function showJustTheLine(position){
+    var listChildren = document.getElementById("exo03_basket").childNodes;
+   listChildren[position].innerHTML =  "<a href='#' class=\"btn btn-sm btn-danger\" onclick='remove(" + position + ")'> - </a> <a href='#' class=\"btn btn-sm btn-success\" onclick='add(" + position + ")'> + </a>" +basket3[position] + " Quantité:" + compteItems[position];
 }
