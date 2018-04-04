@@ -1,0 +1,12 @@
+Host
+======================
+
+127.0.1.1	arrays-twos.bwb
+
+Virtual Host
+======================
+
+<VirtualHost *:80>
+    ServerName arrays-twos.bwb
+    DocumentRoot /var/www/html/serveurweb/arrays-twos.bwb
+</VirtualHost>
